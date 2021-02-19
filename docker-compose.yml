@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx
+    container_name: nginx_pupilos
+    expose:
+      - "80"
+    ports:
+      - "80:80"
+    volumes:
+      - ./configurations/nginx/vhost.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./apps/drupal:/var/www/html:rw
+    links:
+      - php
+  php:
+    build: ./configurations/docker
+    container_name: php_pupilos
+    volumes:
+      - ./apps/drupal:/var/www/html:rw
+      - ./configurations/php/custom.ini:/user/local/etc/php/conf.d/custom.ini:ro
+    privileged: true
+    tty: true
+    links:
+      - mysql
+  mysql:
+    image: mysql:5.7
+    container_name: mysql_pupilos
+    environment:
+      MYSQL_DATABASE: pupilos
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - ./configurations/mysql/config:/config
+      - ./configurations/mysql/data:/var/lib/mysql
