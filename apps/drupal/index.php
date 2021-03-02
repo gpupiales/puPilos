@@ -1,5 +1,3 @@
 <?php
 
 echo "Pupilos";
-
-yara

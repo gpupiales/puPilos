@@ -1,0 +1,5 @@
+alias c='clear'
+alias cr='drush cr'
+alias cim='drush cim'
+alias cex='drush cex'
+alias ci='composer require'

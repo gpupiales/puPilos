@@ -1,0 +1,3 @@
+php -d memory_limit=-1 /usr/local/bin/composer
+
+drush si standard install_configure_form.enable_update_status_module=NULL install_configure_form.enable_update_status_emails=NULL --account-name=admin --account-pass=admin --db-url=mysql://root:root@database-app/viernes -y

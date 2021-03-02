@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     libmcrypt-dev                        \
     libpng-dev                           \
     libpcre3-dev                         \
+    libmemcached-dev                     \
     libzip-dev                           \
     curl                                 \
     default-mysql-client                 \
@@ -21,6 +22,9 @@ RUN docker-php-ext-install -j$(nproc) mysqli                && \
 
 RUN pecl install mcrypt-1.0.3 && \
     docker-php-ext-enable mcrypt
+
+RUN pecl install memcached-3.1.4 && \
+    docker-php-ext-enable memcached
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
   /usr/local/bin/composer --ansi --version --no-interaction
