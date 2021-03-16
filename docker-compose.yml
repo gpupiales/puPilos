@@ -25,6 +25,7 @@ services:
     links:
       - database-app
       - memcache-app
+      - elasticsearch-app
   database-app:
     image: mysql:5.7
     container_name: mysql_pupilos
@@ -38,3 +39,20 @@ services:
   memcache-app:
     image: memcached
     container_name: memcached_pupilos
+  elasticsearch-app:
+    image: elasticsearch:7.10.1
+    container_name: es_pupilos
+    ports:
+     - "9200:9200"
+     - "9300:9300"
+    environment:
+      discovery.type: "single-node"
+  varnish-app:
+    image: varnish
+    container_name: varnish_pupilos
+    ports:
+      - "8082:80"
+    volumes:
+      - ./configurations/varnish/default.vcl:/etc/varnish/default.vcl:ro
+    links:
+      - nginx:backend-host
